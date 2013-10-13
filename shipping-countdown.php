@@ -11,6 +11,8 @@
 add_action( 'widgets_init', 'shipping_countdown' );
 
 function shipping_countdown() {
+
+	load_plugin_textdomain('shipping_countdown', false, dirname(plugin_basename(__FILE__)).'/languages/');
 	register_widget( 'shipping_countdown' );
 }
 
