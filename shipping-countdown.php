@@ -24,9 +24,9 @@ class shipping_countdown extends WP_Widget {
 	static $append = false;
 
 	function shipping_countdown() {
-		$widget_ops = array( 'classname' => 'shipping_countdown', 'description' => __('Countdown to next shipping', 'shipping_countdown'));
+		$widget_ops = array( 'classname' => 'shipping_countdown', 'description' => __('Countdown until next shipping', 'shipping_countdown'));
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'shipping_countdown-widget' );
-		$this->WP_Widget( 'shipping_countdown-widget', __('Forsendelses nedtælling', 'shipping_countdown'), $widget_ops, $control_ops );
+		$this->WP_Widget( 'shipping_countdown-widget', __('Shipping countdown', 'shipping_countdown'), $widget_ops, $control_ops );
 	}
 	
 	function widget( $args, $instance ) {
@@ -34,8 +34,8 @@ class shipping_countdown extends WP_Widget {
 
 		//Our variables from the widget settings.
 		$title 		= apply_filters('widget_title', $instance['title'] );
-		$hours 		= isset($instance['hours']) ? $instance['hours'] : 16;
-		$minutes 	= isset($instance['minutes']) ? $instance['minutes'] : 00;
+		$hours 		= isset($instance['hours']) ? $instance['hours'] : '16';
+		$minutes 	= isset($instance['minutes']) ? $instance['minutes'] : '00';
 		$append 	= isset($instance['append']) ? $instance['append'] : false;
 
 		//used for the init
@@ -92,22 +92,21 @@ class shipping_countdown extends WP_Widget {
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'shipping_countdown'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" class="widefat" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'hours' ); ?>"><?php _e('Hours:', 'shipping_countdown'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'hours' ); ?>" placeholder="Hours" name="<?php echo $this->get_field_name( 'hours' ); ?>" value="<?php echo $instance['hours']; ?>" style="width:50%;" />
+			<input id="<?php echo $this->get_field_id( 'hours' ); ?>" placeholder="Hours" class="widefat" name="<?php echo $this->get_field_name( 'hours' ); ?>" value="<?php echo $instance['hours']; ?>" style="width:50%;" />
 		</p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'minutes' ); ?>"><?php _e('Minutes:', 'shipping_countdown'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'minutes' ); ?>" placeholder="Minutes" name="<?php echo $this->get_field_name( 'minutes' ); ?>" value="<?php echo $instance['minutes']; ?>" style="width:50%;" />
+			<input id="<?php echo $this->get_field_id( 'minutes' ); ?>" placeholder="Minutes" class="widefat" name="<?php echo $this->get_field_name( 'minutes' ); ?>" value="<?php echo $instance['minutes']; ?>" style="width:50%;" />
 		</p>
-		<p class="description"><?php _e('Only use "Append to" if you know how to use it. <a href="http://api.jquery.com/append/" target="_blank">More info</a>', 'shipping_countdown'); ?></p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'append' ); ?>"><?php _e('Append to:', 'shipping_countdown'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'append' ); ?>" placeholder="#main-nav #top" name="<?php echo $this->get_field_name( 'append' ); ?>" value="<?php echo $instance['append']; ?>" style="width:100%;" />
+			<input id="<?php echo $this->get_field_id( 'append' ); ?>" placeholder="#main-nav #top" class="widefat" name="<?php echo $this->get_field_name( 'append' ); ?>" value="<?php echo $instance['append']; ?>" style="width:100%;" />
 		</p>
-
+		<p class="description"><?php _e('Only use "Append to" if you know how to use it. <a href="http://api.jquery.com/append/" target="_blank">More info</a>', 'shipping_countdown'); ?></p>
 	<?php
 	}
 
@@ -125,7 +124,7 @@ class shipping_countdown extends WP_Widget {
 			var curTime = new Date();
 			//date string for today
 			ts = new Date(curTime.getFullYear(), curTime.getMonth(), curTime.getDate(), '.self::$hours.', '.self::$minutes.')
-			//past 16:00 --> count to tomorrow. 
+			//past 16:00 --> count until tomorrow. 
 			if((new Date()) > ts){
 				var curTime = new Date();
 				ts = new Date(curTime.getFullYear(), curTime.getMonth(), curTime.getDate() + 1, '.self::$hours.', '.self::$minutes.')
